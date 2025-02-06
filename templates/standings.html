@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ battle.contest.name }} - Standings</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1><span class="icon">⚔️</span> <span class="title">{{ battle.contest.name }} - Standings</span></h1>
+    <div class="team-standings">
+      {% for name, rows in teams %}
+      <div class="team-card">
+        <h2>{{ name }}</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Handle</th>
+              <th>Rank</th>
+              <th>Solved</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% set_global total_points = 0 %}
+            {% set_global total_score = 0 %}
+            {% for row in rows %}
+            <tr>
+              <td>{{ row.party.members[0].handle }}</td>
+              <td>{{ row.rank }}</td>
+              <td>{{ row.points }}</td>
+              <td class="numeric score-value">{{ row.score }}</td>
+            </tr>
+            {% set_global total_points = total_points + row.points %}
+            {% set_global total_score = total_score + row.score %}
+            {% endfor %}
+            <!-- Add a row for the team totals -->
+            <tr class="totals-row">
+              <td><strong>Team Totals</strong></td>
+              <td></td>
+              <td><strong>{{ total_points }}</strong></td>
+              <td class="numeric score-value"><strong>{{ total_score }}</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <script>
+    // Round all score values to two decimal places
+    document.querySelectorAll('.score-value').forEach(element => {
+      const score = parseFloat(element.textContent);
+      element.textContent = score.toFixed(2);
+    });
+  </script>
+
+</body>
+
+</html>

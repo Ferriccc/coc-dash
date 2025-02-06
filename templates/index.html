@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Battle List</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <h1><span class="icon">⚔️</span> <span class="title">Battles</span></h1>
+    <div class="battle-list">
+      {% for contest_result in battles %}
+      <a href="/battle/{{ contest_result.contest.name }}" class="battle-card">
+        <h2>{{ contest_result.contest.name }}</h2>
+        <p>Contest ID: <span>{{ contest_result.contest.id }}</span></p>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+
+</html>
